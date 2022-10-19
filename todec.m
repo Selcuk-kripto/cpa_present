@@ -1,4 +1,4 @@
-% Bit dizisi L'yi onluk taban değerine dönüştürür
+% Bit dizisi L'yi onluk taban degerine dÃ¶nÃ¼stÃ¼rÃ¼r
 function M=todec(L)
 N=0;
 i=1;
