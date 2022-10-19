@@ -25,24 +25,24 @@ end
  
 K=Kt;
  
-% Güç ölçüm sayýsý
+% GÃ¼Ã§ Ã¶lÃ§Ã¼m sayÃ½sÃ½
 TN=5000;
  
-% Tahmin entropisini (eklenen) her 100 ölçümde yeniler
+% Tahmin entropisini (eklenen) her 100 Ã¶lÃ§Ã¼mde yeniler
 stp=100;
  
-%Gürültünün standart sapmasý
+%GÃ¼rÃ¼ltÃ¼nÃ¼n standart sapmasÃ½
 std=18;
  
-% Örneklem sayýsý (Simüle edilen güç ölçümü uzunluðu)
+% Ã–rneklem sayÃ½sÃ½ (SimÃ¼le edilen gÃ¼Ã§ Ã¶lÃ§Ã¼mÃ¼ uzunluÃ°u)
 Ts=1000;
  
 
-% Tur anahtarlarýný üretir
+% Tur anahtarlarÃ½nÃ½ Ã¼retir
 R(1,:)=K(1:80);        
 for i=2:32
     K=[K(62:80) K(1:61)];
-    t=todec(K(1:4));% 4 biti onluk tabana çevirir
+    t=todec(K(1:4));% 4 biti onluk tabana Ã§evirir
     K(1:4)=Sb(t+1,:);
     rc=dobin(i-1,5);  
     K(61:65)=xor(K(61:65),rc);
@@ -51,7 +51,7 @@ end
  
 Kc=R(32,PR(33:36));
  
-% Tahmin edilmesi beklenen gerçek anahtar
+% Tahmin edilmesi beklenen gerÃ§ek anahtar
 kcd=todec(Kc);
  
 % Aday anahtarlar
@@ -64,7 +64,7 @@ H(1:TN,1:16)=0;
  
 % Tahmin matrisini hesaplar 
 for I=1:TN
-    C=round(rand([1 64])); % Rasgele üretilen açýk metin   
+    C=round(rand([1 64])); % Rasgele Ã¼retilen aÃ§Ã½k metin   
     C=xor(C,R(1,1:64));
     for i=2:31% PRESENT'in ilk 30 turu
         for j=1:16 
@@ -75,16 +75,16 @@ for I=1:TN
         C=xor(C,R(i,1:64));   
     end  
     % Son tur
-    tx=C; % Son turun giriþi
+    tx=C; % Son turun giriÃ¾i
     for j=1:16 
         t=todec(C(4*(j-1)+1:4*j)); 
         C(4*(j-1)+1:4*j)=Sb(t+1,:);
     end
     C(PR)=C; 
     C=xor(C,R(32,1:64));   
-    ty=C; % Son turun çýkýþý
+    ty=C; % Son turun Ã§Ã½kÃ½Ã¾Ã½
  
-    % Simüle edilen güç ölçümü
+    % SimÃ¼le edilen gÃ¼Ã§ Ã¶lÃ§Ã¼mÃ¼
     TR(I,:)=sum(xor(tx,ty))+std*randn([1 Ts]);          
    
     So=C(PR(33:36));
@@ -104,7 +104,7 @@ rx(1:16,1:(TN-stp)/stp+1)=0;
 cnt=0;
 CFa=[];
     
-% Her 100 ölçüm için tahmin entropisini hesaplar
+% Her 100 Ã¶lÃ§Ã¼m iÃ§in tahmin entropisini hesaplar
 for pn=stp:stp:TN
     if rem(pn,1000)==0
         [2 pn]
@@ -129,29 +129,7 @@ for pn=stp:stp:TN
     rx(ix,cnt)=(1:16)'-1;
 end  
 plot(rx(kcd+1,:));
-xlabel('Ölçüm Sayýsý (10^2)')
+xlabel('Ã–lÃ§Ã¼m SayÃ½sÃ½ (10^2)')
 ylabel('Tahmin entropisi')                      
  
-% % Onluk tabandaki K sayýsýný k bite dönüþtürür
-% function Y=dobin(K,k)
-%  A=dec2bin(K,k);
-% X=find(A=='1');
-% [m,n]=size(X);
-% Y(1:k)=0;
-% if n > 0
-%    for j=1:n
-%       Y(X(j))=1;
-%    end
-% else 
-%    Y(1:k)=0;
-% end
-%    
-% % Bit dizisi L'yi onluk taban deðerine dönüþtürür
-% function M=todec(L)
-% N=0;
-% i=1;
-% for n=length(L)-1:-1:0
-%    N=N+L(i)*(2^n);
-%    i=i+1;
-% end
-% M=N;
+
