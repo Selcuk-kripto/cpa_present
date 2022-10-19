@@ -1,4 +1,4 @@
-% Onluk tabandaki K sayısını k bite dönüştürür
+% Onluk tabandaki K sayisini k bite dÃ¶nÃ¼stÃ¼rÃ¼r
 function Y=dobin(K,k)
 
 A=dec2bin(K,k);
